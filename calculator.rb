@@ -18,7 +18,7 @@ class Calculator
   end
 
   def square(number)
-    return number * number
+    return number ** 2
   end
 
   def power(number, exponent)
