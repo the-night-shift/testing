@@ -19,13 +19,12 @@ require 'rspec'
 class ChangeMachine
   def change(money)
     coins = []
-    while money > 0
-      # put a cent in the array
-      coins << 1
-      # coins = [1,1,1]
-      # take away one cent
-      money -= 1
-      # money == 0
+    denominations = [25,10,5,1]
+    denominations.each do |denomination|
+      while money >= denomination
+        coins << denomination
+        money -= denomination
+      end
     end
     return coins
   end
@@ -45,6 +44,34 @@ RSpec.describe ChangeMachine do
     it 'should return [1,1,1] when given 3' do
       machine = ChangeMachine.new
       expect(machine.change(3)).to eq([1,1,1])
+    end
+    it 'should return [5] when given 5' do
+      machine = ChangeMachine.new
+      expect(machine.change(5)).to eq([5])
+    end
+    it 'should return [5,1] when given 6' do
+      machine = ChangeMachine.new
+      expect(machine.change(6)).to eq([5,1])
+    end
+    it 'should return [10] when given 10' do
+      machine = ChangeMachine.new
+      expect(machine.change(10)).to eq([10])
+    end
+    it 'should return [10,10] when given 20' do
+      machine = ChangeMachine.new
+      expect(machine.change(20)).to eq([10,10])
+    end
+    it 'should return [10,5,1,1,1] when given 18' do
+      machine = ChangeMachine.new
+      expect(machine.change(18)).to eq([10,5,1,1,1])
+    end
+    it 'should return [25] when given 25' do
+      machine = ChangeMachine.new
+      expect(machine.change(25)).to eq([25])
+    end
+    it 'should return [25,25,25,25,10,5,1,1,1,1] when given 119' do
+      machine = ChangeMachine.new
+      expect(machine.change(119)).to eq([25,25,25,25,10,5,1,1,1,1])
     end
   end
 end
